@@ -1,0 +1,15 @@
+@mixin normalize
+    margin: 0
+    padding: 0
+    height: 100%
+    width: 100%
+    
+@mixin flex($content, $wrap)
+    @include normalize
+    display: flex
+    justify-content: $content
+    flex-wrap: $wrap
+
+@mixin text-color
+    color: white
+
