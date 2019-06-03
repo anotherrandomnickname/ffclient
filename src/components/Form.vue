@@ -14,7 +14,6 @@ export default class Form extends Vue {
 
 <style scoped lang='sass'>
 .form
-  background: #19162C
   display: flex
   justify-content: center
   flex-wrap: wrap

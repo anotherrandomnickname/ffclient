@@ -1,10 +1,9 @@
 import { expect } from 'chai'
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import {} from 'mocha'
-import Session from '@/store/Auth/Session'
+import Session from '@/store/modules/Session'
 import Vuex, { Store } from 'vuex'
 import { VuexModule } from 'vuex-module-decorators'
-import { ILogin, IReg, IUser } from '@/interfaces/_index'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
@@ -20,7 +19,7 @@ describe('Vuex: Session', () => {
     const session = store.state.session
     const token = session.s.init()
 
-    const submit: ILogin = {
+    const submit: any = {
       login: 'Overlord',
       password: 'sarinaru007123',
       token,
@@ -44,13 +43,13 @@ describe('Vuex: Session', () => {
   it('НЕ должно ИНИЦИАЛИЗИРОВАТЬ СЕССИЮ', async done => {
     const session = store.state.session
 
-    const wrongSubmit1: ILogin = {
+    const wrongSubmit1: any = {
       login: 'Pawn3',
       password: '3422sss',
       token: '',
     }
 
-    const wrongSubmit2: ILogin = {
+    const wrongSubmit2: any = {
       login: 'Overlord',
       password: 'sdfs3432',
       token: '',
@@ -71,13 +70,13 @@ describe('Vuex: Session', () => {
 
   it('Логин НЕ ДОЛЖЕН быть ВАЛИДНЫМ', async done => {
     const session = store.state.session
-    const submit: ILogin = {
+    const submit: any = {
       login: '324ddsf',
       password: '',
       token: '',
     }
 
-    const submit2: ILogin = {
+    const submit2: any = {
       login: '43',
       password: '0006',
       token: '',
@@ -146,7 +145,7 @@ describe('Vuex: Session', () => {
   it('Должно ЗАРЕГИСТРИРОВАТЬСЯ и инициализировать СЕССИЮ', async done => {
     const session = store.state.session
     const token = session.s.init()
-    const submit: IReg = {
+    const submit: any = {
       login: 'Pawn',
       pass: 'sooqalubov',
       passConf: 'sooqalubov',
@@ -164,7 +163,7 @@ describe('Vuex: Session', () => {
 
   it('Должно АВТОРИЗИРОВАТЬСЯ по зарегистрированному ЛОГИНУ', () => {
     const session = store.state.session
-    const submit: ILogin = {
+    const submit: any = {
       login: 'Pawn',
       password: 'sooqalubov',
       token: '',

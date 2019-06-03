@@ -1,23 +1,24 @@
 import Vue from 'vue'
 import App from './App.vue'
-import Button from '@/components/Button.vue'
-import Form from '@/components/Form.vue'
-import Input from '@/components/Input.vue'
 import router from './router'
 import store from './store/store'
+import * as firebase from 'firebase'
 import './registerServiceWorker'
 
 Vue.config.productionTip = false
-Vue.component('button-sama', Button)
-Vue.component('form-placeholder', Form)
-Vue.component('input-chan', Input)
+
+const config = {
+  apiKey: 'AIzaSyAME59BCbXhN1JvlM_dz7bcqgc8QveKocA',
+  authDomain: 'fairy-db978.firebaseapp.com',
+  databaseURL: 'https://fairy-db978.firebaseio.com',
+  projectId: 'fairy-db978',
+  storageBucket: 'fairy-db978.appspot.com',
+  messagingSenderId: '429653183723',
+}
+
+firebase.initializeApp(config)
 
 new Vue({
-  components: {
-    'button-sama': Button,
-    'form-placeholder': Form,
-    'input-chan': Input,
-  },
   router,
   store,
   render: h => h(App),

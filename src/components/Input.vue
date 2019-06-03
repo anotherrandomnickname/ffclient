@@ -1,8 +1,8 @@
 <template lang="pug">
   .container
-    .input-container
+    div(class='input-container' v-bind:class='{active2: isActive, inactive2: !isActive}')
       p(v-bind:class='{active: isActive, inactive: !isActive}' class='input-p') {{title}}
-      input(@focus='onFocus' @blur='onBlur' :type='$props.type' @input='handleInput')
+      input(@focus='onFocus' @blur='onBlur' v-model='content' :type='$props.type' @input='handleInput')
     p(class='error-msg') {{err}}
 </template>
 
@@ -12,20 +12,21 @@ import { MouseEvent } from '@/interfaces/_index'
 
 @Component
 export default class Input extends Vue {
+  @Prop({default: ''}) public contentProp!: string
+  public content: string = ''
+  public isActive: boolean = false
+  @Prop() public middleware?: (content: any) => any
+  @Prop() public err!: string
   @Prop({ default: 'text' })
   private type!: string
   @Prop() private title!: string
-  public content: string = ''
-  public isActive: boolean = false
-  @Prop() middleware?: Array<Function>
-  @Prop() err!: string
 
   @Emit('input')
   public handleInput(e: MouseEvent): string {
     this.content = e.currentTarget.value as string
     if (this.$props.middleware) {
-      for (let i = 0; i < this.$props.middleware.length; i++) {
-        this.$props.middleware[i](this.content)
+      for (let middleware of this.$props.middleware) {
+        middleware(this.content)
       }
     }
     return this.content
@@ -35,7 +36,15 @@ export default class Input extends Vue {
   }
 
   public onBlur(): void {
+    console.log(this.content, this.contentProp)
     this.content.length === 0 ? (this.isActive = false) : (this.isActive = true)
+  }
+
+  public mounted(): void {
+    if(this.contentProp.length >= 1) {
+      this.isActive = true
+      this.content = this.contentProp
+    }
   }
 }
 </script>
@@ -47,20 +56,20 @@ export default class Input extends Vue {
 
 
 .error-msg
-  height: 2em
-  font-family: 'RobotoBlack'
-  font-size: 1em
+  height: .8em
+  font-family: 'RobotoMedium'
+  font-size: .8em
   color: red
   text-align: right
   position: relative
 .input-container
   width: 100%
-  height: 3em
-  border: 1px solid rgba(85, 132, 255, .4)
+  border: 1px solid rgba(85, 132, 255, 0.6)
   border-radius: 5px
   display: grid
   grid-template-columns: auto
   grid-template-rows: 0.75em 1.5em 0.75em
+  transition: all .3s
 input
   color: white
   z-index: 100
@@ -89,6 +98,13 @@ input
   margin-left: 10px
   position: absolute
   transition: all .3s
+
+
+.active2
+  border: 1px solid rgba(85, 132, 255, 1)
+
+.inactive2
+  border: 1px solid rgba(85, 132, 255, 0.6)
 
 .active
   color: white

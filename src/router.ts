@@ -2,11 +2,14 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/views/Home.vue'
 import Login from '@/views/Auth/Login.vue'
-import Logout from '@/views/Auth/Logout.vue'
 import Register from '@/views/Auth/Register.vue'
-import ws from '@/views/ws.vue'
 
 Vue.use(Router)
+
+function loadView(view: any) {
+  return () =>
+    import(/* webpackChunkName: "view-[request]" */ `@/views/${view}.vue`)
+}
 
 export default new Router({
   mode: 'history',
@@ -15,36 +18,52 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home,
+      component: loadView('Home'),
     },
     {
-      path: '/login',
-      name: 'login',
-      component: Login,
+      path: '/forum',
+      name: 'forum',
+      component: loadView('Forum'),
     },
     {
-      path: '/logout',
-      name: 'logout',
-      component: Logout,
+      path: '/forum/:id',
+      name: 'subforum',
+      component: loadView('Subforum'),
     },
     {
-      path: '/ws',
-      name: 'ws',
-      component: ws
+      path: '/forum/:fid/th-:id-:page',
+      name: 'theme',
+      component: loadView('Theme'),
     },
     {
       path: '/register',
       name: 'register',
-      component: Register,
+      component: loadView('Register'),
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: loadView('Login'),
+    },
+    {
+      path: '/profile/users/:pk',
+      name: 'profile',
+      component: loadView('Profile'),
+    },
+    {
+      path: '/profile',
+      name: 'userprofile',
+      component: loadView('Profile'),
+    },
+    {
+      path: '/profile/:path',
+      name: 'userprofile',
+      component: loadView('Profile'),
     },
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () =>
-        import(/* webpackChunkName: "about" */ './views/About.vue'),
+      component: loadView('About'),
     },
   ],
 })

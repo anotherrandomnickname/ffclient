@@ -3,7 +3,7 @@ export interface MouseEventValue extends MouseEvent {
 }
 
 export interface MouseEvent {
-  target: Array<MouseEventValue>
+  target: MouseEventValue[]
   currentTarget?: any
   preventDefault: () => void
 }

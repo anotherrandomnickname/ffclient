@@ -1,0 +1,55 @@
+.offline {
+  color: red;
+}
+
+.username {
+  font-family: 'RobotoMedium';
+}
+
+.username-link {
+  cursor: poiner;
+}
+
+.admin {
+  color: #FFD300;
+  font-weight: bold;
+}
+
+.guest {
+  color: snow;
+}
+
+.blocked {
+  color: snow;
+}
+
+.user {
+  color: white;
+}
+
+.junior-mod {
+  color: lightgreen;
+}
+
+.mod {
+  color: green;
+}
+
+.junior-bible {
+  color: purple;
+}
+
+.junior-admin {
+  color: blue;
+}
+
+.bible {
+  color: red;
+  font-weight: bold;
+}
+
+.admin {
+  color: #FFD300;
+  font-weight: bold;
+}
+/*# sourceMappingURL=claims.css.map */
